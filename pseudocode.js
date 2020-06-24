@@ -79,5 +79,9 @@ function attack(ship) {
 }
 
 
+function returnRandomNumber(min, max) {
+    
+}
+
 
 */
