@@ -51,49 +51,67 @@ class SpaceBattle {
             5,
             0.7
         )
-        this.alienShip = new SpaceShip(
-            "Alien Ship",
-            6,
-            4,
-            0.6
-        )
+        this.initializeAlienShipArray();
     }
+
+    initializeAlienShipArray(){
+        this.alienShips = [];
+        for (let i = 1; i <= 6; i++) {
+            this.alienShips.push(
+                new SpaceShip(
+                    "Alien Ship "+i,
+                    this.returnRandomNumber(3, 6), //Hull between 3 and 6
+                    this.returnRandomNumber(2,4),  //Firepower between 2 and 4
+                    (this.returnRandomNumber(6, 8))/10 //Accuracy between 0.6 and 0.8
+                )
+            )       
+        }
+
+    }
+
+    returnRandomNumber(min, max){
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
 
     run() {
         //Start the game with the first attack
         console.log("Running");
         let attackOrRetreat = prompt("Would you like to attack or retreat?", "attack/retreat");
+        let alienShipIndex =  0;
         while (attackOrRetreat == "attack") {
-            let gameOver = false;
             // USS Obama attacks Alien Ship
             this.ussObama.displayStatus();
-            let ussObamaResults = this.ussObama.attack(this.alienShip);
-            if (this.alienShip.isDestroyed()) {
-                this.alienShip.displayStatus();
-                console.log(`${this.alienShip.name} has been destroyed!!`);
-                gameOver = true;
-                alert(`${this.alienShip.name} has been destroyed!!  Game Over!!`)
+            let ussObamaResults = this.ussObama.attack(this.alienShips[alienShipIndex]);
+            if (this.alienShips[alienShipIndex].isDestroyed()) {
+                this.alienShips[alienShipIndex].displayStatus();
+                console.log(`${this.alienShips[alienShipIndex].name} has been destroyed!!`);
+                //if that was the last alien ship, end the game
+                if (alienShipIndex == 5) {
+                    console.log(`${this.ussObama.name} has destroyed all the Alien Ships!!!  Earth is saved!!! \n**** GAME OVER ****`);
+                    alert(`${this.ussObama.name} has destroyed all the Alien Ships!!!  Earth is saved!!! \n****GAME OVER****`);
+                    attackOrRetreat = ""; //end Game by setting attackOrRetreat to empty string
+                } else {
+                    //Get next Alien Ship
+                    alienShipIndex++;
+                    attackOrRetreat =  prompt("Would you like to attack or retreat?", "attack/retreat");
+                }
             } else {
-                this.alienShip.displayStatus();
+                this.alienShips[alienShipIndex].displayStatus();
                 // Alien Ship's turn to attack USS Obama
-                let alienShipResults = this.alienShip.attack(this.ussObama);
+                let alienShipResults = this.alienShips[alienShipIndex].attack(this.ussObama);
                 if (this.ussObama.isDestroyed()) {
                     console.log(`${this.ussObama.name} has been destroyed!!  Game Over!!`);
-                    gameOver = true;
                     alert(`${this.ussObama.name} has been destroyed!!  Game Over!!`);
+                    attackOrRetreat = ""; //end Game by setting attackOrRetreat to empty string
                 }
             }
-            //Start next round
-            if (!gameOver) {
-                console.log("Start next round!!");
-                attackOrRetreat =  prompt("Would you like to attack or retreat?", "attack/retreat");
-            } else {
-                attackOrRetreat = "retreat";
+            if (attackOrRetreat == "retreat") {
+                console.log("*** GAME OVER ***");
+                alert("*** GAME OVER ***");
             }
         } //end while loop
         // Goodbye. Game Over
-        console.log("*** GAME OVER ***");
-        alert("*** GAME OVER ***");
     }
 }
 
