@@ -119,7 +119,7 @@ class SpaceBattle {
 //      After all aliens are destroyed, the games ends.
 // ===========================================================
     run() {
-        //Start the game with the first attack
+        //Start the game with the first attack by USS Obama
         let attackOrRetreat = "attack"
         let alienShipIndex =  0;
         while (attackOrRetreat == "attack") {
