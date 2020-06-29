@@ -80,6 +80,7 @@ class SpaceBattle {
         )
         this.initializeAlienShipArray();
     }
+    
 // ===========================================================
 // function initializeAlienShipArray()
 //      Creates six instances of alien ships in an array.
