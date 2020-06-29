@@ -11,19 +11,19 @@ class SpaceShip {
     }
 
     displayStatus(){
-        console.log(`${this.name} Hull: ${this.hull} Firepower: ${this.firepower}  Accuracy: ${this.accuracy}`);
+        console.log(`%c${this.name} Hull: ${this.hull} Firepower: ${this.firepower}  Accuracy: ${this.accuracy}`,'font-size: 40px');
     }
 
     attack(ship){
-        console.log(`${this.name} is attacking ${ship.name}.`);
+        console.log(`%c${this.name} is attacking ${ship.name}.`,'font-size: 30px; color: green');
         // Get random accuracy for this shot
         let shotAccuracy = Math.random(); 
         if (shotAccuracy <= this.accuracy) {
-            console.log(`Direct hit on ${ship.name} with a ${this.firepower} damage!!`);
+            console.log(`%cDirect hit on ${ship.name} with a ${this.firepower} damage!!`,'font-size: 30px; color: red');
             ship.damageHull(this.firepower);
             return "hit";
         } else {
-            console.log(`${this.name} missed it's target!!`);
+            console.log(`%c${this.name} missed it's target!!`,'font-size: 30px; color: blue');
             return "miss"; 
         }
 
@@ -77,7 +77,7 @@ class SpaceBattle {
     run() {
         //Start the game with the first attack
         console.log("Running");
-        let attackOrRetreat = prompt("Would you like to attack or retreat?", "attack/retreat");
+        let attackOrRetreat = "attack"
         let alienShipIndex =  0;
         while (attackOrRetreat == "attack") {
             // USS Obama attacks Alien Ship
@@ -85,10 +85,10 @@ class SpaceBattle {
             let ussObamaResults = this.ussObama.attack(this.alienShips[alienShipIndex]);
             if (this.alienShips[alienShipIndex].isDestroyed()) {
                 this.alienShips[alienShipIndex].displayStatus();
-                console.log(`${this.alienShips[alienShipIndex].name} has been destroyed!!`);
+                console.log(`%c${this.alienShips[alienShipIndex].name} has been destroyed!!`,'font-size: 30px; color: white; background: red; border: 1px solid');
                 //if that was the last alien ship, end the game
                 if (alienShipIndex == 5) {
-                    console.log(`${this.ussObama.name} has destroyed all the Alien Ships!!!  Earth is saved!!! \n**** GAME OVER ****`);
+                    console.log(`%c${this.ussObama.name} has destroyed all the Alien Ships!!!  Earth is saved!!! \n**** GAME OVER ****`,'font-size: 30px; color: white; background: green; border: 1px solid');
                     alert(`${this.ussObama.name} has destroyed all the Alien Ships!!!  Earth is saved!!! \n****GAME OVER****`);
                     attackOrRetreat = ""; //end Game by setting attackOrRetreat to empty string
                 } else {
@@ -101,13 +101,13 @@ class SpaceBattle {
                 // Alien Ship's turn to attack USS Obama
                 let alienShipResults = this.alienShips[alienShipIndex].attack(this.ussObama);
                 if (this.ussObama.isDestroyed()) {
-                    console.log(`${this.ussObama.name} has been destroyed!!  Game Over!!`);
+                    console.log(`%c${this.ussObama.name} has been destroyed!!  Game Over!!`,'font-size: 30px; color: white; background: red; border: 1px solid');
                     alert(`${this.ussObama.name} has been destroyed!!  Game Over!!`);
                     attackOrRetreat = ""; //end Game by setting attackOrRetreat to empty string
                 }
             }
             if (attackOrRetreat == "retreat") {
-                console.log("*** GAME OVER ***");
+                console.log("%c*** GAME OVER ***",'font-size: 50px; color: white; background: black; border: 1px solid');
                 alert("*** GAME OVER ***");
             }
         } //end while loop
@@ -117,11 +117,11 @@ class SpaceBattle {
 
 // Instantiate SpaceBattle 
 let spaceBattle = new SpaceBattle();
-console.log(spaceBattle);
+// console.log(spaceBattle);
 let startGame = prompt("Would you like to play a game?","yes/no");
 if (startGame == "yes") {
     spaceBattle.run();
 } else {
-    console.log("*** GAME OVER ***");
+    console.log("%c*** GAME OVER ***",'font-size: 50px; color: white; background: black; border: 1px solid');
     alert("*** GAME OVER ***");
 }
